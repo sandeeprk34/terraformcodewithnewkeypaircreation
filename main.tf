@@ -143,9 +143,8 @@ resource "aws_instance" "myins" {
     subnet_id = "${aws_subnet.pubsub1.id}"
     availability_zone = "${var.zones[0]}"
     vpc_security_group_ids = ["${aws_security_group.sec.id}"] 
-    count = 2
     tags {
-        Name = "TestEC2-${count.index}"   #### The code above will create 2 EC2 Instances. They will be named “TestEC2-0 and TestEC2-1"
+        Name = "TestEC2"   
     }
     key_name = "${var.key_name}"
 }
