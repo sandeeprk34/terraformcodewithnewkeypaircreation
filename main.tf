@@ -148,4 +148,12 @@ resource "aws_instance" "myins" {
     key_name = "${var.key_name}"
 }
  
+#####Create an ebs volume#####
+
+resource "aws_ebs_volume" "example" {
+  availability_zone = "us-west-2a"
+  size              = 1
+}
+
+
 
