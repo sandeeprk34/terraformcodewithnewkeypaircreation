@@ -141,6 +141,7 @@ resource "aws_instance" "myins" {
     instance_type = "t2.micro"
     associate_public_ip_address = "true"
     subnet_id = "${aws_subnet.pubsub1.id}"
+    availability_zone = "${var.zones[0]}"
     vpc_security_group_ids = ["${aws_security_group.sec.id}"] 
     count = 2
     tags {
