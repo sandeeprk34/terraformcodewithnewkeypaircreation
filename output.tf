@@ -3,6 +3,12 @@ output "id" {
   value       = ["${aws_instance.myins.id}"]
 }
 
+output "runningid" {
+  description = "List of IDs of running instances"
+  value       = ["${data.aws_instance.insdata.instance_id}"]
+}
+
+
 output "availability_zone" {
   description = "List of availability zones of instances"
   value       = ["${aws_instance.myins.availability_zone}"]
