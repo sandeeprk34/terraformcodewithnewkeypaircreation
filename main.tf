@@ -147,6 +147,43 @@ resource "aws_instance" "myins" {
     }
     key_name = "${var.key_name}"
 }
+
+####Get the running EC2 Instances#####
+
+data "aws_instance" "insdata" {
+  instance_id = "${aws_instance.myins.id}"
+
+  filter {
+    name   = "instance-state-name"
+    values = ["running"]
+  }
+}
+
+
+######Creating an EBS Volume#####
+resource "aws_ebs_volume" "myebs" {
+  availability_zone = "us-west-2a"
+  size              = 1
+}
+
+
+
+####Attaching an EBS Volume to the EC2 instance#####
+resource "aws_volume_attachment" "ebs_att" {
+  device_name = "/dev/sdl"
+  volume_id   = "${aws_ebs_volume.myebs.id}"
+  instance_id = "${data.aws_instance.insdata.instance_id}"
+}
+
+
+####Attaching an EBS Volume to the EC2 instance#####
+#resource "aws_volume_attachment" "ebs_att" {
+#  device_name = "/dev/sdz"
+ # volume_id   = "${aws_ebs_volume.myebs.id}"
+  #instance_id = "${aws_instance.myins.id}"
+#}
+
+
  
 
 
