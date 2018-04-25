@@ -1,6 +1,6 @@
 #####Provider#####
 provider "aws" {
- region     = "${var.region}"
+ region     = "us-west-2"
 }
 
 ######Creating a new key pair while launching an EC2 instance######
@@ -13,10 +13,10 @@ resource "aws_key_pair" "mykeypair" {
 
 #####Spinning EC2 Instance####
 resource "aws_instance" "myins" {
-    ami = "${lookup(var.images, var.region)}" 
+    ami = "ami-223f945a" 
     instance_type = "t2.micro"
     associate_public_ip_address = "true"
-    availability_zone = "${var.zones[0]}"
+    
     tags {
         Name = "TestEC2"   
     }
