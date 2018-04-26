@@ -9,9 +9,11 @@ provider "aws" {
 
 resource "aws_key_pair" "mykeypair" {
   key_name   = "tfkey"
-
- #public_key = "ssh-rsasdfff sfsfssfsfsf+Ffsfsffn0vQ6bDkkxWkQSr4xmNv86gyV/ZrVoWdFhwiCa0sqs1IJcrDv3FcC9lUYiaEiKC+I6BEUSk9gE9PimVYDjGoUliAqPZWPNu9VpbQ1XPOY52XbrWi70KLI1NKqLAmrnLWloy8l31R6U5cdLhkqWMFuzaaIVyJvQwNB3m2jDlLsYkwn4vfGXCR6yRfMATvG2T1D81m6nrdb5kvfuoSi8TiQPZ8Ortfdji8Q4v0tcRJ0pQTqa1CL+zWmmHdTTsfFieOoKJ6f3sI/ungpmGzSQTsnBtAjrOEvag7QDiiUVfm5QMm0qR4COjjnJjelF65Z8vx7543 ec2-user@ip-172-31-29-10.us-west-2.compute.internal"
- #public_key = "${file("tfkey.pub")}"    #Here we are giving the file location of public key file instead of hardcoding the public key.
+ 
+ #####Hardcoding the public key#####
+ public_key = "ssh-rsasdfff sfsfssfsfsf+Ffsfsffn0vQ6bDkkxWkQSr4xmNv86gyV/ZrVoWdFhwiCa0sqs1IJcrDv3FcC9lUYiaEiKC+I6BEUSk9gE9PimVYDjGoUliAqPZWPNu9VpbQ1XPOY52XbrWi70KLI1NKqLAmrnLWloy8l31R6U5cdLhkqWMFuzaaIVyJvQwNB3m2jDlLsYkwn4vfGXCR6yRfMATvG2T1D81m6nrdb5kvfuoSi8TiQPZ8Ortfdji8Q4v0tcRJ0pQTqa1CL+zWmmHdTTsfFieOoKJ6f3sI/ungpmGzSQTsnBtAjrOEvag7QDiiUVfm5QMm0qR4COjjnJjelF65Z8vx7543 ec2-user@ip-172-31-29-10.us-west-2.compute.internal"
+ #######Giving the Public key path######
+ public_key = "${file("tfkey.pub")}"    
  }
 
 
@@ -28,15 +30,15 @@ resource "aws_instance" "myins" {
    #####For the user data 
     # 1>I am directly writing the user data script here only as shown below
    
-    #user_data= << EOF
-         #!# /bin/bash
-         #yum install -y httpd
-         #service httpd start
-         #chkconfig httpd on
-        # echo  "<h1>Terraform</h1>" > /var/www/html/index.html
-    #EOF
+    user_data= << EOF
+         #! /bin/bash
+         yum install -y httpd
+         service httpd start
+         chkconfig httpd on
+         echo  "<h1>Terraform</h1>" > /var/www/html/index.html
+    EOF
   # 2>Or We can create file with th user data and give the file path using the file function.
-    #user_data =  "${file("installhttpd.sh")}"             
+    user_data =  "${file("installhttpd.sh")}"             
  
     
 }
